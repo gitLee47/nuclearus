@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nuclear Viz</title>
+
+    <!-- Bootstrap -->
+    <link href="../static/nuclearvizFiles/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+    <link href="../static/nuclearvizFiles/css/print.css" media="print" rel="stylesheet" type="text/css">
+    <link href="../static/nuclearvizFiles/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="../static/nuclearvizFiles/css/jquery-ui.css" rel="stylesheet" type="text/css">
+    <!--[if IE]>
+        <link href="stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        <![endif]-->
+
+	
+    <!-- Leaflet code and stylesheets -->
+    <link href="../static/nuclearvizFiles/css/leaflet.css" rel="stylesheet" type="text/css">
+
+	<!-- Our stylesheet, generated from sass/viz.scss -->
+    <link href="../static/nuclearvizFiles/css/viz.css" rel="stylesheet" type="text/css">
+	<link href="../static/nuclearvizFiles/css/dc3.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+	  <div class="container-fluid">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		  </button>
+		  <a class="navbar-brand" href="default.html#/viewprofile">Welcome</a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+		  <ul class="nav navbar-nav navbar-right">
+			<li><a href="default.html#/store" title="Store"> Home </a></li>
+		  </ul>
+		</div>
+	  </div>
+	</nav>
+
+    <div class="container-fluid" style="padding-top:5%;">
+    <div class="row">
+      <div class="col-md-12">
+        <center><h1 style="font-size:24pt; font-weight:bold; color:dark gray;">Nuclear Incident Visualizer</h1></center>
+        <div id="container">
+
+          <div id="body">
+          <div id="hour-controls">
+            <div>Select an incident type: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div class="hour"><a href='javascript:renderAllM();'>All</a></div>
+            <div class="hour"><a href='javascript:power();'>Power Reactor</a></div>
+			<div class="hour"><a href='javascript:agree();'>Agreement State</a></div>
+			<div class="hour"><a href='javascript:nagree();'>Non-Agreement State</a></div>
+			<div class="hour"><a href='javascript:others();'>Others</a></div>
+          </div>
+			<div class="textCenter loader" id="loader"></div>						
+					
+          <div id="panels">
+			
+		  
+            <section class="panel" id="map-panel">
+			<div id='row-selection'>
+				&nbsp;&nbsp;&nbsp;<span class="filter-count">_</span> selected out of <span class="total-count">_</span> records |
+							   <span>
+				<a href='javascript:renderAllM();'><font color="#33CC99">Reset All</font></a>
+				</span>
+			</div>
+              <center><header></header></center>
+              <div class="content">
+               <div id="map" style="position: relative;"></div>
+			  </div>
+            </section>
+
+            <section class="panel" id="station-chart-panel">
+              <center>
+              <header>
+                 <h4 class="textCenter">Number of occurrence based on timeline</h4>
+              </header>
+            </center>
+              <span id="capacity"></span>
+              <div class="content">
+                <!-- <div class="title" id="station-chart-title">Average Weekday Station Traffic by Hour</div> -->
+                <!-- <div class="title" ><center style="font-size:12pt;font-weight:bold;">Average Station Traffic by Day</center></div> -->
+                <div id="station-chart" style="opacity: 1.0">
+                  <!-- <svg width="400" height="410"> </svg> -->
+					<div id='dc-time-chart-tweetSum'>
+							 
+					</div>
+                </div>
+              </div>
+              <footer><!-- put nothing here, the axis labels go here instead --></footer>
+            </section>
+
+          </div>
+
+          <section id="accumulation-chart-container">
+
+            <div id="accumulation-chart">
+              <center style="font-weight:bolder;">
+                <span>State wise incidents</span>
+				<div id='location-row-chart'>
+					 
+				</div>
+				
+				<div class="reportDiv">
+				  <div class='row'>
+						<span><center><b>List of all incident rows corresponding to the filters</b></center></span>
+						  <table class='table table-hover' id='data-table'>
+							<thead>
+							  <tr class='header'>
+								<th><center>Year</center></th>
+								<th><center>Country of Origin</center></th>
+								<th><center>Type of Incident</center></th>
+								<th><center>Description</center></th>
+							  </tr>
+							</thead>
+						  </table>
+						  <div id="paging">
+							Showing <span id="begin"></span>-<span id="end"></span> of <span id="size"></span>.
+							<input id="last" class="btn" type="Button" value="Last" onclick="javascript:last()" />
+							<input id="next" class="btn" type="button" value="Next" onclick="javascript:next()"/>
+						  </div>
+						
+				  </div>
+				</div>
+              </center>
+			  
+            </div>
+			
+          </section>
+
+        </div><!-- body -->
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+<div class="center"><div class="footerBox">
+<p class="footerLinks"> 
+<a href="mailto:lrg37@pitt.edu">Contact |</a> <a href="http://localhost/csvanalyser/"> Home |</a> <a href="mailto:advertise@pitt.edu"> Advertise</a></p><p> This site is created and maintained by <a href="http://www.pitt.edu/" target="_blank">PicsoLab</a>. <br> This website is a non-profit and non-commercial venture.</p>
+</div>
+</div>
+	
+	<!-- All JavaScripts -->
+    <!-- Misc vendor javascript libs -->
+    <script type="text/javascript" src="../static/nuclearvizFiles/scripts/jq.js"></script>
+    <script type="text/javascript" src="../static/nuclearvizFiles/js/bootstrap.min.js"></script>
+
+    <!-- Slider related -->
+    <script src="../static/nuclearvizFiles/scripts/jquery-ui.js"></script>
+
+    <!-- Our javascript 
+    <script src="scripts/stations_zia.js"></script>
+    <script src="scripts/hourlyAverage.js"></script>
+    <script src="scripts/stationCap.js"></script>
+    <script src="scripts/viz.js"></script> -->
+	
+	<script type="text/javascript" src="../static/nuclearvizFiles/scripts/d3.js"></script>
+	<script type="text/javascript" src="../static/nuclearvizFiles/scripts/d3tip.js"></script>
+	<script type="text/javascript" src="../static/nuclearvizFiles/scripts/crossfilter.js"></script>
+	<script type="text/javascript" src="../static/nuclearvizFiles/scripts/dc3.js"></script>
+	<script type="text/javascript" src="../static/nuclearvizFiles/scripts/leaflet.js"></script>
+	<script type="text/javascript" src="../static/nuclearvizFiles/scripts/leaflet-heat.js"></script>
+	<script type="text/javascript" src="../static/nuclearvizFiles/scripts/scriptUS.js"></script>
+  </body>
+</html>

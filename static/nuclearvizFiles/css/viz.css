@@ -1,0 +1,477 @@
+@charset "UTF-8";
+/* Overall color scheme, etc */
+/* Constants that CSS could calculate, but we hard-code so Leaflet can work */
+/* No idea where the 10px comes from */
+/* Easier to measure things with this */
+/* line 23, ../sass/viz.scss */
+body, div, span, header, footer, h1, h2, h3, h4 {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.leaflet-marker-icon,.leaflet-clickable,.leaflet-zoom-animated {
+  z-index:-1 !important;
+}
+
+.domain,.tick line {
+    stroke: gray;
+    stroke-width: 1px;
+}
+
+.link {
+  color: #df6342;
+  font-size: 8pt;
+}
+
+/*
+ * Principle layout
+ */
+#container {
+  width: 100%;
+}
+
+#container #titlebar {
+  padding-left: 30px;
+  margin-bottom: -3px;
+  font-size: 20pt;
+}
+
+#container #titlebar #sub-title {
+  font-size: 12pt;
+  font-style: italic;
+}
+
+#container #titlebar .link#help-link {
+  float: right;
+  font-size: 8pt;
+}
+
+#container #body {
+  border: 1px solid black;
+  border-radius: 20px;
+  background-color: #f4f4f4;
+  padding-bottom: 10px;
+  width:1150px;
+  margin: 0 auto;
+}
+
+#container #body #panels {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-box;
+  display: box;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  -ms-box-orient: horizontal;
+  box-orient: horizontal;
+}
+
+/* General bits for the chart panel with rounded corners, a header, and a footer */
+.panel {
+  height: 460px;
+  margin: 0.5em;
+  border: 1px solid black !important;
+  border-radius: 20px;
+  overflow: hidden;
+  /* To round the corner of the map */
+}
+
+.panel header {
+  display: block;
+  padding-top: 5px;
+  /*padding-left: 30px;*/
+  height: 30px;
+  background-color: white;
+  font-weight: bold;
+  font-size: 12pt;
+  border-bottom: 1px solid black;
+}
+
+#stationname{
+  color:blue;
+}
+
+#station-chart-panel header {
+  height: 50px;
+  border-bottom: none;
+}
+.panel div.content {
+  display: block;
+  height: 400px;
+  background-color: white;
+}
+.panel footer {
+  height: 40px;
+  display: block;
+  border-top: 1px solid black;
+  padding-top: 5px;
+  padding-left: 20px;
+  font-style: italic;
+  font-size: 10pt;
+  background-color: white;
+}
+.panel #map-foot-stats {
+  float: right;
+  padding-right: 20px;
+}
+
+/* Map */
+#map-panel #map {
+  width: 770px;
+  height: 400px;
+}
+#map-panel #map-legend {
+  position: relative;
+  left: -1px;
+  top: -130px;
+  border: 1px solid black;
+}
+
+/* Hour controls */
+#hour-controls {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-box;
+  display: box;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  -ms-box-orient: horizontal;
+  box-orient: horizontal;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -ms-box-align: center;
+  box-align: center;
+  margin-top: 8px;
+  margin-bottom: 2px;
+  border: 1px solid gray;
+  border-radius: 20px;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+  padding-left: 45px;
+  width: 100%;
+  font-size: 8pt;
+  font-weight: bold;
+  background-color: #fdfdfd;
+}
+#hour-controls .hour {
+  margin: -3px;
+  padding: 8px;
+  border-radius: 5px;
+  min-width: 100px;
+  cursor: hand;
+  text-align: center;
+}
+#hour-controls .hour:hover {
+  border: 1px solid black;
+  margin: -4px;
+  background-color: white;
+}
+#hour-controls .hour.selected {
+  border: 2px solid black;
+  margin: -5px;
+  background-color: #fddf24;
+  fill-opacity: 0.5;
+}
+
+/* Station line chart panel */
+#station-chart-panel {
+  width: 350px;
+  background-color: white;
+}
+#station-chart-panel .title {
+  padding-top: 3px;
+  height: 10px;
+  padding-left: 30px;
+  font-size: 8pt;
+  color: black;
+}
+#station-chart-panel #capacity {
+  color: black;
+  float: right;
+  padding-top: 5px;
+  padding-right: 24px;
+  font-size: 10pt;
+  font-weight: bolder;
+}
+#station-chart-panel #station-chart {
+  height: 395px;
+}
+#station-chart-panel #station-chart .title {
+  font-family: sans-serif;
+  font-size: 12px;
+}
+#station-chart-panel #station-chart .line {
+  fill: none;
+  stroke-width: 2px;
+}
+#station-chart-panel #station-chart .line.arrivals {
+  stroke: #2c826b;
+}
+#station-chart-panel #station-chart .line.departures {
+  stroke: #df6342;
+}
+#station-chart-panel #station-chart .area {
+  opacity: 0.15;
+}
+#station-chart-panel #station-chart .area.arrivals {
+  fill: #2c826b;
+}
+#station-chart-panel #station-chart .area.departures {
+  fill: #df6342;
+}
+#station-chart-panel #station-chart .axis path,
+#station-chart-panel #station-chart .axis line {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+#station-chart-panel #station-chart .axis text {
+  font-family: sans-serif;
+  font-size: 11px;
+}
+#station-chart-panel #station-chart .y.axis path {
+  /*display: none;*/
+}
+#station-chart-panel footer {
+  border-top: 0px solid black;
+}
+
+/* Accumulation bar chart */
+#accumulation-chart-container #accumulation-chart {
+  padding-top: 10px;
+  padding-bottom: 25px;
+  height: 100%;
+  border: solid 1px;
+  border-radius: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: white;
+  width:1130px;
+}
+#accumulation-chart-container #accumulation-chart .bar-label {
+  font-size: 8pt;
+}
+#accumulation-chart-container #accumulation-chart .bar-label.positive {
+  text-anchor: end;
+}
+#accumulation-chart-container #accumulation-chart .bar-label.negative {
+  text-anchor: start;
+}
+
+#accumulation-chart-container #accumulation-chart .bar {
+  stroke: black;
+  stroke-width: 1px;
+  border: 1px solid black;
+  fill-opacity: 0.8;
+}
+
+#accumulation-chart-container #accumulation-chart .bar.positive {
+  fill: #2c826b;
+}
+
+#accumulation-chart-container #accumulation-chart .bar.negative {
+  fill: #df6342;
+}
+
+#accumulation-chart-container #accumulation-chart .bar.neutral {
+  fill: #a1988d;
+}
+
+#accumulation-chart-container #accumulation-chart .bar.highlighted {
+  fill: white;
+  stroke-width: 2px;
+}
+
+#accumulation-chart-container #accumulation-chart .axis path,
+#accumulation-chart-container #accumulation-chart .axis line {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+
+#accumulation-chart-container #accumulation-chart .axis text {
+  font-family: sans-serif;
+  font-size: 11px;
+}
+
+#accumulation-chart-container #accumulation-chart .bary.axis path {
+  /*display: none;*/
+  font-size: 12px;
+}
+
+#accumulation-chart-container #accumulation-chart .activator {
+  stroke-width: 0px;
+  fill-opacity: 0.0;
+}
+
+#accumulation-chart-container #accumulation-chart .activator.highlighted {
+  fill-opacity: 0.5;
+  /*fill: #ffffff;*/
+  fill: grey;
+}
+
+#accumulation-chart-container #accumulation-chart .activator.selected {
+  fill: #fddf24;
+  fill-opacity: 0.5;
+}
+
+/* Nicer styles for the english-language accompanying this. */
+
+#narrative {
+  font-family: "Century Schoolbook";
+  margin-left: 55px;
+  color: #333333;
+  width: 1100px;
+}
+
+#narrative h2, #narrative h1 {
+  font-family: inherit;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+#narrative ul {
+  list-style: circle outside none;
+}
+
+#narrative em {
+  font-style: italic;
+}
+
+#narrative p {
+  margin-bottom: 1em;
+}
+
+#narrative div {
+  font-family: inherit;
+}
+
+/* Hacks for the help */
+
+#help {
+  clear: both;
+}
+
+#help td em {
+  white-space: nowrap;
+}
+
+#help td {
+  padding: 1em;
+  vertical-align: top;
+  color: #333333;
+}
+
+#insights-holder h2 {
+  #       font-size: 14pt;
+}
+
+#insights-holder p {
+  #	max-width: 600px;
+  #       font-size: 10pt;
+}
+
+#insights-holder .pics {
+  # position: relative;
+  float: right;
+  margin-left: 0px;
+  padding-left: 20px;
+  margin-right: 0px;
+  margin-bottom: 10px;
+}
+
+#insights-holder img {
+  #position: abosolute;
+  #top: 10px;
+}
+
+#insights-holder .story {
+  clear: both;
+  #	margin-left: 10px;
+}
+
+#insights-holder .story-text {
+  padding-top: 20px;
+  width-max: 50%;
+}
+
+select {
+    padding:3px;
+    margin: 0;
+    border-radius:4px;
+    box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    background: #f8f8f8;
+    color:#888;
+    border:1px solid #dcdcdc;
+    display: inline-block;
+    cursor:pointer;
+}
+
+table {
+  margin: 0 auto;
+  text-align: center;
+  border-collapse: collapse;
+  border: 1px solid #d4d4d4;
+}
+ 
+tr:nth-child(even) {
+  background: #d4d4d4;
+}
+
+th, td {
+  padding: 10px 30px;
+}
+ 
+th {
+  border-bottom: 1px solid #d4d4d4;
+  background-color: #d4ffd4;
+} 
+
+th:hover {
+    cursor:pointer;
+    background:#AAA;
+}
+
+.reportDiv {
+    font: 14px Arial, sans-serif;
+    padding-top: 8px;
+    clear: both;
+    line-height: 1.4em;
+    background-color: #fbfbfb;
+    border: #e1e8ed solid 1px;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 50px;
+}
+
+
+.footerBox {
+    text-align: center;
+    margin: 40px 0 50px;
+    color: #4D6879;
+    font-size: 16px;
+}
+.loader {
+  margin-left: auto;
+  margin-right: auto;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid blue;
+  border-right: 16px solid green;
+  border-bottom: 16px solid red;
+  border-left: 16px solid pink;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
